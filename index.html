@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IonWalk - Step Into the Future</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- For the Pie Chart -->
+    <style>
+        canvas {
+            max-width: 400px;
+            max-height: 400px;
+            width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="logo.jpg" alt="IonWalk Logo">
+        </div>
+        <h1>IonWalk</h1>
+        <p>Step Into the Future</p>
+    </header>
+    
+    <main>
+        <section class="hero">
+            <h2>The Future of Fitness at Your Feet</h2>
+            <p>Experience real-time tracking, unmatched comfort, and performance insights like never before.</p>
+            <div class="buttons">
+                <a href="learn-more.html" class="btn">Learn More</a>
+                <a href="pre-order.html" class="btn">Pre-order Now - $50 Off!</a>
+            </div>
+        </section>
+
+        <!-- Pie Charts for Google Form Responses -->
+        <section id="form-responses">
+            <h2>Google Form Responses</h2>
+
+            <!-- Question 1: Age -->
+            <canvas id="agePieChart"></canvas>
+            <h3>Age Group Distribution</h3>
+
+            <!-- Question 2: Gender -->
+            <canvas id="genderPieChart"></canvas>
+            <h3>Gender Distribution</h3>
+
+            <!-- Question 3: Fitness Level -->
+            <canvas id="fitnessLevelPieChart"></canvas>
+            <h3>Fitness Level Distribution</h3>
+
+            <!-- Question 4: Physical Activity Frequency -->
+            <canvas id="activityFrequencyPieChart"></canvas>
+            <h3>Physical Activity Frequency</h3>
+
+            <!-- Question 5: Innovation Perception -->
+            <canvas id="innovationPieChart"></canvas>
+            <h3>Innovation Perception</h3>
+
+            <!-- Question 6: Switching to FitTech -->
+            <canvas id="switchPieChart"></canvas>
+            <h3>Likelihood to Switch to FitTech</h3>
+
+            <!-- Question 7: Price Range for Running Shoes -->
+            <canvas id="priceRangePieChart"></canvas>
+            <h3>Price Range Distribution</h3>
+
+            <!-- Question 8: Perception of FitTech's Pricing -->
+            <canvas id="pricingPerceptionPieChart"></canvas>
+            <h3>Perception of FitTech Pricing</h3>
+
+            <!-- Question 9: Features Willing to Pay More For -->
+            <canvas id="featuresPieChart"></canvas>
+            <h3>Willingness to Pay More for Features</h3>
+
+            <!-- Question 10: Preferred Purchase Location -->
+            <canvas id="purchaseLocationPieChart"></canvas>
+            <h3>Preferred Purchase Location</h3>
+
+            <!-- Question 11: Promotional Influencers -->
+            <canvas id="promotionalInfluencePieChart"></canvas>
+            <h3>Promotional Strategy Influence</h3>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="links">
+            <a href="contact-us.html">Contact Us</a>
+            <a href="faqs.html">FAQs</a>
+        </div>
+    </footer>
+
+    <!-- JavaScript for Pie Charts -->
+    <script>
+        const ageData = [25, 35, 20, 15, 5]; // Age responses (e.g. 18-24, 25-34, 35-44, 45-54, 55+)
+        const genderData = [60, 35, 5]; // Gender responses (Male, Female, Non-binary)
+        const fitnessLevelData = [40, 45, 15]; // Fitness level responses (Beginner, Intermediate, Advanced)
+        const activityFrequencyData = [30, 40, 20, 10]; // Activity frequency responses (Daily, 3-4 times a week, Once a week, Rarely)
+        const innovationData = [80, 20]; // Innovation perception responses (Yes, No)
+        const switchData = [50, 50]; // Likelihood to switch responses (Yes, No)
+        const priceRangeData = [10, 25, 30, 25, 10]; // Price range responses ($50-$100, $100-$150, $150-$200, $200-$300, $300+)
+        const pricingPerceptionData = [50, 40, 10]; // Pricing perception responses (Fair, Expensive, Affordable)
+        const featuresData = [30, 20, 40, 10]; // Features willing to pay more for (Speed Tracking, Running Angle Analysis, Ergonomic Comfort, Analytics Dashboard)
+        const purchaseLocationData = [60, 30, 10]; // Preferred purchase location responses (Online, Retail Stores, Both)
+        const promotionalInfluenceData = [40, 30, 30]; // Promotional strategy influence responses (Discounts, Free Shipping, Product Trials)
+
+        const chartConfigs = [
+            { id: 'agePieChart', data: ageData, labels: ['18-24', '25-34', '35-44', '45-54', '55+'] },
+            { id: 'genderPieChart', data: genderData, labels: ['Male', 'Female', 'Non-binary'] },
+            { id: 'fitnessLevelPieChart', data: fitnessLevelData, labels: ['Beginner', 'Intermediate', 'Advanced'] },
+            { id: 'activityFrequencyPieChart', data: activityFrequencyData, labels: ['Daily', '3-4 times a week', 'Once a week', 'Rarely'] },
+            { id: 'innovationPieChart', data: innovationData, labels: ['Yes', 'No'] },
+            { id: 'switchPieChart', data: switchData, labels: ['Yes', 'No'] },
+            { id: 'priceRangePieChart', data: priceRangeData, labels: ['$50-$100', '$100-$150', '$150-$200', '$200-$300', '$300+'] },
+            { id: 'pricingPerceptionPieChart', data: pricingPerceptionData, labels: ['Fair', 'Expensive', 'Affordable'] },
+            { id: 'featuresPieChart', data: featuresData, labels: ['Speed Tracking', 'Running Angle Analysis', 'Ergonomic Comfort', 'Analytics Dashboard'] },
+            { id: 'purchaseLocationPieChart', data: purchaseLocationData, labels: ['Online', 'Retail Stores', 'Both'] },
+            { id: 'promotionalInfluencePieChart', data: promotionalInfluenceData, labels: ['Discounts', 'Free Shipping', 'Product Trials'] },
+        ];
+
+        chartConfigs.forEach(config => {
+            const ctx = document.getElementById(config.id).getContext('2d');
+            new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: config.labels,
+                    datasets: [{
+                        data: config.data,
+                        backgroundColor: ['#FF5733', '#FF8D1A', '#4CAF50', '#1E88E5', '#9C27B0'],
+                        hoverOffset: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false, // This ensures the pie chart scales based on container size
+                }
+            });
+        });
+    </script>
+</body>
+</html>
